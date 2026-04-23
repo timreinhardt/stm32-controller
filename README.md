@@ -1,6 +1,6 @@
 # STM32 Embedded Controller Example
 
-Small embedded controller-style project created to refresh low-level embedded patterns and explore architecture ahead of working with STM32 hardware.
+Small embedded controller-style project created to refresh low-level embedded patterns and explore architecture
 
 Focus is on structure, testability, and workflow, not hardware integration (yet).
 
