@@ -46,7 +46,7 @@ make thread   # thread demo
 
 - Written in C as a quick refresher  
 - Structured to keep application logic separate from STM32/HAL code  
-- Tests run on host (Mac) to keep iteration fast  
+- Tests run on host 
 
 ---
 
