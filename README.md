@@ -1,7 +1,7 @@
 # STM32 Controller
 
 Small STM32-based controller project created
-Tests run on host (macOS/Linux) to allow fast iteration without hardware.
+Tests run on host to allow fast iteration without hardware.
 
 ## Overview
 
