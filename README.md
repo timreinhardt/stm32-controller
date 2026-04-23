@@ -1,128 +1,59 @@
-# STM32 Embedded Controller Example
+# STM32 Controller
 
-Small embedded controller-style project created to refresh low-level embedded patterns and explore architecture
-
-Focus is on structure, testability, and workflow, not hardware integration (yet).
+Small STM32-based controller project put together as a quick refresher on embedded structure and tooling ahead of getting hands-on with hardware.
 
 ---
 
 ## Overview
 
-This project models a simple embedded controller with:
-- Event-driven state machine
-- Command parsing layer
-- Application/configuration layer
-- Host-based unit testing
-- Basic concurrency demo (threads)
+The project models a simple controller with:
+- a basic state machine (IDLE / RUNNING / FAULT)
+- command parsing separated from behaviour
+- a small configuration layer (e.g. rate)
+- host-side tests for quick iteration
+- a simple threading demo
 
 ---
 
-## Architecture
-
-Input (UART / test)
-        ↓
-app_cmd        → parses commands
-        ↓
-app_state      → enforces behaviour (state machine)
-        ↓
-app            → stores configuration (e.g. rate)
-
-### State Machine
-
-States:
-- IDLE
-- RUNNING
-- FAULT
-
-Events:
-- START
-- STOP
-- FAULT_DETECTED
-- RESET
-
-Transitions handled in:
-App/Src/app_state.c
-
----
-
-## Project Structure
+## Structure
 
 App/
-  Inc/
   Src/
     app.c
     app_cmd.c
     app_state.c
 
-Core/        (STM32Cube generated code)
+Core/        (STM32Cube generated)
 Drivers/     (HAL / CMSIS)
 
 tests/
   unit/
-    test_app.c
-    test_cmd.c
-    test_state_matrix.c
   concurrency/
-    thread_demo.c
-  Makefile
 
 ---
 
-## Running Tests (Host)
+## Running Tests
 
-From the tests/ directory:
+From the `tests/` folder:
 
-make run      # app/state tests
-make cmd      # command tests
-make matrix   # state/event coverage
-make thread   # concurrency demo
-
----
-
-## Concurrency Demo
-
-Basic producer/consumer example using:
-- pthread_mutex
-- pthread_cond
-
-File:
-tests/concurrency/thread_demo.c
-
----
-
-## Toolchain
-
-- STM32CubeMX
-- STM32CubeIDE
-- GCC/Clang (host testing)
-
----
-
-## Current Status
-
-- No hardware integration yet
-- Logic fully testable on host
-- Structure prepared for:
-  - BSP layer
-  - RTOS integration
-  - event-driven architecture
-
----
-
-## Next Steps
-
-- Introduce event queue
-- Add BSP layer
-- Integrate with STM32 hardware
-- Transition toward C++
+make run      # app/state tests  
+make cmd      # command tests  
+make matrix   # state combinations  
+make thread   # thread demo  
 
 ---
 
 ## Notes
 
-This is a learning / preparation project, not production code.
+- Written in C as a quick refresher  
+- Structured to keep application logic separate from STM32/HAL code  
+- Tests run on host (Mac) to keep iteration fast  
 
-Focus areas:
-- separation of concerns
-- embedded architecture patterns
-- testability without hardware
+---
+
+## Next
+
+- add event queue  
+- introduce BSP layer  
+- integrate with STM32 hardware  
+- move toward C++  
