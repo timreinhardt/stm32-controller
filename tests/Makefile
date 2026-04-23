@@ -1,14 +1,17 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -I../Core/Inc
 
-SRC = ../Core/Src/app.c test_app.c
-OUT = test_app
+run:
+	$(CC) $(CFLAGS) ../Core/Src/app.c unit/test_app.c -o test_app
+	./test_app
 
-all:
-	$(CC) $(CFLAGS) $(SRC) -o $(OUT)
+cmd:
+	$(CC) $(CFLAGS) ../Core/Src/app.c ../Core/Src/app_cmd.c unit/test_cmd.c -o test_cmd
+	./test_cmd
 
-run: all
-	./$(OUT)
+thread:
+	$(CC) $(CFLAGS) concurrency/thread_demo.c -o thread_demo
+	./thread_demo
 
 clean:
-	rm -f $(OUT)
+	rm -f test_app test_cmd thread_demo
