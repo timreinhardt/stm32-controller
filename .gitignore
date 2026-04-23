@@ -1,0 +1,28 @@
+# Build outputs
+Debug/
+Release/
+build/
+
+# STM32CubeIDE / Eclipse metadata
+.settings/
+.metadata/
+
+# Object & binary files
+*.o
+*.d
+*.elf
+*.bin
+*.hex
+*.map
+
+# Logs / temp
+*.log
+*.tmp
+*.bak
+
+# macOS
+.DS_Store
+
+# CubeMX backups
+*.ioc.backup
+
