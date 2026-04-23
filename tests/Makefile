@@ -1,12 +1,12 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11 -I../Core/Inc
+CFLAGS = -Wall -Wextra -std=c11 -I../App/Inc
 
 run:
-	$(CC) $(CFLAGS) ../Core/Src/app.c unit/test_app.c -o test_app
+	$(CC) $(CFLAGS) ../App/Src/app.c unit/test_app.c -o test_app
 	./test_app
 
 cmd:
-	$(CC) $(CFLAGS) ../Core/Src/app.c ../Core/Src/app_cmd.c unit/test_cmd.c -o test_cmd
+	$(CC) $(CFLAGS) ../App/Src/app.c ../App/Src/app_cmd.c unit/test_cmd.c -o test_cmd
 	./test_cmd
 
 thread:

@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
-#include "../../Core/Inc/app.h"
+#include "app.h"
 
 int main(void)
 {

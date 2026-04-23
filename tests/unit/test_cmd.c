@@ -1,8 +1,8 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-#include "../../Core/Inc/app.h"
-#include "../../Core/Inc/app_cmd.h"
+#include "app.h"
+#include "app_cmd.h"
 
 int main(void)
 {
