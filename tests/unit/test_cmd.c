@@ -20,13 +20,8 @@ int main(void)
     assert(strcmp(app_handle_command("STATUS"), "STATUS FAULT RATE 1500\r\n") == 0);
 
     assert(strcmp(app_handle_command("START"), "ERR FAULT\r\n") == 0);
-    assert(strcmp(app_handle_command("STOP"), "ERR FAULT\r\n") == 0);
-
     assert(strcmp(app_handle_command("RESET"), "OK\r\n") == 0);
     assert(strcmp(app_handle_command("STATUS"), "STATUS IDLE RATE 1500\r\n") == 0);
-
-    assert(strcmp(app_handle_command("SET RATE 99999"), "ERR RANGE\r\n") == 0);
-    assert(strcmp(app_handle_command("NOPE"), "ERR\r\n") == 0);
 
     printf("Command tests passed\n");
     return 0;

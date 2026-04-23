@@ -1,5 +1,6 @@
 #include "app_cmd.h"
 #include "app.h"
+#include "app_state.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -13,19 +14,19 @@ const char *app_handle_command(const char *input)
     }
 
     if (strcmp(input, "START") == 0) {
-        return app_start();
+        return app_state_handle_event(APP_EVENT_START);
     }
 
     if (strcmp(input, "STOP") == 0) {
-        return app_stop();
+        return app_state_handle_event(APP_EVENT_STOP);
     }
 
     if (strcmp(input, "FAULT") == 0) {
-        return app_fault();
+        return app_state_handle_event(APP_EVENT_FAULT_DETECTED);
     }
 
     if (strcmp(input, "RESET") == 0) {
-        return app_clear_fault();
+        return app_state_handle_event(APP_EVENT_RESET);
     }
 
     if (sscanf(input, "SET RATE %d", &value) == 1) {
@@ -33,21 +34,8 @@ const char *app_handle_command(const char *input)
     }
 
     if (strcmp(input, "STATUS") == 0) {
-        const char *state_str = "UNKNOWN";
-
-        switch (app_get_state()) {
-        case APP_IDLE:
-            state_str = "IDLE";
-            break;
-        case APP_RUNNING:
-            state_str = "RUNNING";
-            break;
-        case APP_FAULT:
-            state_str = "FAULT";
-            break;
-        }
-
-        snprintf(buf, sizeof(buf), "STATUS %s RATE %d\r\n", state_str, app_get_rate());
+        snprintf(buf, sizeof(buf), "STATUS %s RATE %d\r\n",
+                 app_state_name(app_state_get()), app_get_rate());
         return buf;
     }
 
