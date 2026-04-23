@@ -1,8 +1,8 @@
 # STM32 Controller
 
-Small STM32-based controller project put together as a quick refresher on embedded structure and tooling ahead of getting hands-on with hardware.
+Small STM32-based controller project created as a refresher on embedded structure and tooling ahead of working with hardware.
+
 Tests run on host (macOS/Linux) to allow fast iteration without hardware.
----
 
 ## Overview
 
