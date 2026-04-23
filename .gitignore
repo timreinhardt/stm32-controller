@@ -26,3 +26,6 @@ build/
 # CubeMX backups
 *.ioc.backup
 
+# test executables
+tests/test_*
+tests/thread_demo
