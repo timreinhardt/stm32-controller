@@ -18,7 +18,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "app.h"
+//#include "app.h"
+#include "app_hw.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -100,8 +101,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  app_run_once();
-	  HAL_Delay(1000);
+	  //app_run_once();
+	App_ButtonLedHw();
+	HAL_Delay(1);
+	  //HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }

@@ -1,56 +1,135 @@
 # STM32 Controller
 
-Small STM32-based controller project created
-Tests run on host to allow fast iteration without hardware.
-
-## Overview
-
-Project models a simple controller with:
-- a basic state machine (IDLE / RUNNING / FAULT)
-- command parsing separated from behaviour
-- a small configuration layer (e.g. rate)
-- host-side tests for quick iteration
-- a simple threading demo
+Ongoing practical STM32 / embedded development project focused on progressive refreshers, initially host-side testing, then real hardware integration.
 
 ---
 
-## Structure
+# Repository Structure
 
+```text
 App/
-  Src/
-    app.c
-    app_cmd.c
-    app_state.c
+ ├── Inc/
+ │    ├── app.h        (host/laptop only - Makefile tests)
+ │    ├── app_cmd.h
+ │    ├── app_state.h
+ │    └── app_hw.h     (STM32 dev board / HAL)
+ │
+ └── Src/
+      ├── app.c        (host/laptop only - Makefile tests)
+      ├── app_cmd.c
+      ├── app_state.c
+      └── app_hw.c     (STM32 dev board / HAL)
 
-Core/        (STM32Cube generated)
-Drivers/     (HAL / CMSIS)
-
+Core/
+Drivers/
 tests/
-  unit/
-  concurrency/
+```
 
 ---
 
-## Running Tests
+# App Layer Overview
 
-From the `tests/` folder:
+## STM32 Hardware
+### app_hw.c
 
-make run      # app/state tests  
-make cmd      # command tests  
-make matrix   # state combinations  
-make thread   # thread demo  
-
----
-
-## Notes
-
-- Written in C as a quick refresher  
-- Structured to keep application logic separate from STM32/HAL code  
-- Tests run on host 
+```text
+USER button + LD2 LED GPIO validation
+```
 
 ---
 
-## Next
-- integrate with STM32 hardware  
-- move to C++
-- abc
+## Host / Logic
+### app.c
+Core application logic and config
+
+
+# Host-Side Testing (Laptop)
+
+inital iteration without STM32 hardware.
+
+## From `/tests`:
+
+```bash
+make run
+make cmd
+make matrix
+make thread
+```
+
+### Purpose:
+- `make run` → app/state tests
+- `make cmd` → command parser
+- `make matrix` → state transitions
+- `make thread` → pthread refresher
+
+---
+
+# Concurrency Demo
+
+## Shared:
+
+```text
+mutex
+condition variable
+shared count
+```
+
+
+# STM32 Hardware Test: USER Button + LD2 LED
+
+Simple NUCLEO-L476RG board validation.
+
+## Purpose
+Confirm:
+- CubeMX pin config
+- HAL GPIO
+- Button input
+- LED output
+- Debounce
+- Build chain
+
+
+---
+
+# Board Mapping
+
+```text
+B1 USER button = PC13
+LD2 green LED  = PA5
+RESET          = NRST hardware reset
+```
+
+### USER button:
+```text
+Pressed  = GPIO_PIN_RESET
+Released = GPIO_PIN_SET
+```
+
+---
+
+# Behaviour
+
+```text
+Press USER once  → LED toggles
+Press USER again → LED toggles again
+```
+
+
+# Build Requirements
+
+Exclude laptop files:
+App/Inc/app.h
+App/Inc/app_cmd.h
+App/Inc/app_state.h
+
+App/Src/app.c
+App/Src/app_cmd.c
+App/Src/app_state.c
+
+keeps  STM32 hardware test focused only on USER button + LED validation while excluding host-side logic and test architecture.
+```
+
+
+
+
+
