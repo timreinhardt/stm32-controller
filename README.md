@@ -1,12 +1,11 @@
 # STM32 Controller
 
-Small STM32-based controller project put together as a quick refresher on embedded structure and tooling ahead of getting hands-on with hardware.
-Tests run on host (macOS/Linux) to allow fast iteration without hardware.
----
+Small STM32-based controller project created
+Tests run on host to allow fast iteration without hardware.
 
 ## Overview
 
-The project models a simple controller with:
+Project models a simple controller with:
 - a basic state machine (IDLE / RUNNING / FAULT)
 - command parsing separated from behaviour
 - a small configuration layer (e.g. rate)
@@ -47,13 +46,11 @@ make thread   # thread demo
 
 - Written in C as a quick refresher  
 - Structured to keep application logic separate from STM32/HAL code  
-- Tests run on host (Mac) to keep iteration fast  
+- Tests run on host 
 
 ---
 
 ## Next
-
-- add event queue  
-- introduce BSP layer  
 - integrate with STM32 hardware  
-- move toward C++  
+- move to C++
+- abc
