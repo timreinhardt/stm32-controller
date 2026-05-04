@@ -38,12 +38,7 @@ USER button + LD2 LED GPIO validation
 
 ---
 
-## Host / Logic
-### app.c
-Core application logic and config
-
-
-# Host-Side Testing (Laptop)
+## Host-Side Testing (Laptop)
 
 inital iteration without STM32 hardware.
 
