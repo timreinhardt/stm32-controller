@@ -14,8 +14,8 @@ matrix:
 	./test_state_matrix
 	
 thread:
-	$(CC) $(CFLAGS) concurrency/thread_demo.c -o thread_demo
+	$(CC) $(CFLAGS) concurrency/thread_demo.c -o thread_demo -pthread
 	./thread_demo
 
 clean:
-	rm -f test_app test_cmd thread_demo
+	rm -f test_app test_cmd test_state_matrix thread_demo
