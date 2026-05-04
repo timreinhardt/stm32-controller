@@ -2,6 +2,10 @@
 
 Ongoing practical STM32 / embedded development project focused on progressive refreshers, initially host-side testing, then real hardware integration.
 
+NB Pending HW
+
+Initial STM32 project generated via STM32CubeMX / STM32CubeIDE for the NUCLEO-L476RG development board, then progressively extended with custom application and hardware validation layers.
+
 ---
 
 # Repository Structure
@@ -69,7 +73,6 @@ condition variable
 shared count
 ```
 
-
 # STM32 Hardware Test: USER Button + LD2 LED
 
 Simple NUCLEO-L476RG board validation.
@@ -94,19 +97,10 @@ LD2 green LED  = PA5
 RESET          = NRST hardware reset
 ```
 
-### USER button:
-```text
-Pressed  = GPIO_PIN_RESET
-Released = GPIO_PIN_SET
-```
-
----
-
 # Behaviour
 
 ```text
-Press USER once  → LED toggles
-Press USER again → LED toggles again
+Press USER once  → LED toggle
 ```
 
 
