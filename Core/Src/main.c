@@ -20,6 +20,7 @@
 #include "main.h"
 //#include "app.h"
 #include "app_hw.h"
+#include "app_uart.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -91,7 +92,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  //todo App_UartInit();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -103,8 +104,9 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	  //app_run_once();
 	App_ButtonLedHw();
+	//todo App_UartTask
 	HAL_Delay(1);
-	  //HAL_Delay(1000);
+
   }
   /* USER CODE END 3 */
 }
