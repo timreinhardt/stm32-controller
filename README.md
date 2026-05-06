@@ -2,7 +2,7 @@
 
 ## Overview
 
-STM32L476 embedded project transitioning from legacy C modules toward a cleaner C++ controller structure.
+STM32L476 embedded project refresshers  
 
 ### Current focus:
 - `controller.cpp` → Main C++ control layer
@@ -21,8 +21,8 @@ L476_UART_TEST/
 │   │   ├── controller.hpp
 │   │   └── pump_controller.hpp
 │   └── Src/
-│       ├── controller.cpp
-│       ├── app.c
+│       ├── controller.cpp (LED and button)
+│       ├── app.c (initial c test - delete)
 │       ├── app_cmd.c
 │       └── app_state.c
 │
@@ -37,7 +37,7 @@ L476_UART_TEST/
 │       ├── test_cmd.c
 │       └── test_uart_cmd.c
 │
-└── Makefile
+└── Makefile (unit tests)
 ```
 
 ---
@@ -85,18 +85,6 @@ make clean
 # Immediate Next Steps
 
 1. Expand `controller.cpp`
-2. Improve UART debug output
-3. Migrate logic from legacy C into C++
-4. Keep hardware-facing code isolated
+2. ISR
 
 ---
-
-# Goal
-
-Professional embedded C++ project with:
-
-- controller-led architecture
-- UART diagnostics
-- unit-testable logic
-- scalable maintainable design
-
