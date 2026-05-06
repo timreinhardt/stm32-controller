@@ -2,13 +2,14 @@
 
 ## Overview
 
-STM32L476 embedded project refresshers  
+STM32L476 embedded project refresher
+- onboard STM32 debugging status with LED, button, and UART validation
 
 ### Current focus:
-- `controller.cpp` → Main C++ control layer
-- UART / VCP → Runtime debug + command interface
-- STM32CubeIDE → Build / flash / debug
-- Host-side Makefile → Unit testing
+- `controller.cpp` → Main C++ control layer - LED and button control - next rework 
+- UART / VCP → Runtime debug + command interface - working but expand
+- STM32CubeIDE → Build / flash / debug - working
+- Host-side Makefile → Unit testing - passing
 
 ---
 
@@ -22,7 +23,7 @@ L476_UART_TEST/
 │   │   └── pump_controller.hpp
 │   └── Src/
 │       ├── controller.cpp (LED and button)
-│       ├── app.c (initial c test - delete)
+│       ├── app.c (initial c test - cleanup and delete these)
 │       ├── app_cmd.c
 │       └── app_state.c
 │
