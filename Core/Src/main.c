@@ -104,7 +104,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  //app_run_once();
-	App_ButtonLedHw();
 	App_UartTask();
 	Controller_Update();
 	HAL_Delay(1);

@@ -1,171 +1,102 @@
-# STM32 Controller
+# L476_UART_TEST
 
-Ongoing practical STM32 / embedded development project focused on progressive refreshers, initially host-side testing, then real hardware integration.
+## Overview
 
-**Latest:** Host-side Makefile test framework + UART command parser added before full board UART validation.
+STM32L476 embedded project transitioning from legacy C modules toward a cleaner C++ controller structure.
 
-NB Pending HW
-
-Initial STM32 project generated via STM32CubeMX / STM32CubeIDE for the NUCLEO-L476RG development board, then progressively extended with custom application and hardware validation layers.
+### Current focus:
+- `controller.cpp` → Main C++ control layer
+- UART / VCP → Runtime debug + command interface
+- STM32CubeIDE → Build / flash / debug
+- Host-side Makefile → Unit testing
 
 ---
 
-# Repository Structure
+# Project Structure
 
 ```text
-App/
- ├── Inc/
- │    ├── app.h            (host/laptop only - Makefile tests)
- │    ├── app_cmd.h        (host command parser)
- │    ├── app_state.h      (host state machine)
- │    ├── app_uart.h       (UART interface)
- │    ├── app_uart_cmd.h   (UART enum + command text table)
- │    └── app_hw.h         (STM32 dev board / HAL)
- │
- └── Src/
-      ├── app.c            (host/laptop only - Makefile tests)
-      ├── app_cmd.c
-      ├── app_state.c
-      ├── app_uart.c       (UART parser + STM32 UART task)
-      └── app_hw.c         (STM32 dev board / HAL)
-
-Core/      (CubeMX / STM32 generated)
-Drivers/   (HAL / CMSIS)
-
-tests/
- ├── concurrency/
- │    └── thread_demo.c
- ├── Makefile
- └── unit/
-      ├── test_app.c
-      ├── test_cmd.c
-      ├── test_state_matrix.c
-      └── test_uart_cmd.c
-```
-
----
-
-# Current Development Modes
-
-## Local / Host-side (`/tests` Makefile)
-Fast laptop-side validation without flashing STM32:
-
-```bash
-make run
-make cmd
-make matrix
-make thread
-make test_uart
-```
-
-### Purpose:
-- `make run` → app/state tests
-- `make cmd` → host command parser
-- `make matrix` → state transitions
-- `make thread` → pthread refresher
-- `make test_uart` → UART parser / enum / case handling
-
----
-
-## STM32 / CubeIDE Build
-Used for:
-```text
-GPIO
-Button + LED
-HAL
-UART hardware integration
-```
-
----
-
-# App Layer Overview
-
-## app_hw.c
-```text
-USER button + LD2 LED GPIO validation
-Debounced button press
-LED toggle per press
-```
-
-## app_uart.c
-```text
-UART command parsing
-Case-insensitive input
-PING
-HELP
-STATUS
-LED_ON
-LED_OFF
-LED_TOGGLE
-```
-
----
-
-# STM32 Hardware Test: USER Button + LD2 LED
-
-Simple NUCLEO-L476RG board validation.
-
-## Purpose
-Confirm:
-- CubeMX pin config
-- HAL GPIO
-- Button input
-- LED output
-- Debounce
-- Build chain
-
----
-
-# Board Mapping
-
-```text
-B1 USER button = PC13
-LD2 green LED  = PA5
-RESET          = NRST hardware reset
-```
-
----
-
-# Build Requirements
-
-## STM32 Hardware Build:
-Exclude host-only files:
-```text
-App/Inc/app.h
-App/Inc/app_cmd.h
-App/Inc/app_state.h
-
-App/Src/app.c
-App/Src/app_cmd.c
-App/Src/app_state.c
-```
-
-Keeps STM32 build focused on hardware validation + UART integration.
-
----
-
-## Local Makefile Tests:
-Uses host-side files for rapid development without STM32 hardware.
-
----
-
-# Behaviour
-
-```text
-Press USER once → LED toggle
-UART over USB-COM → command parser
+L476_UART_TEST/
+├── App/
+│   ├── Inc/
+│   │   ├── controller.hpp
+│   │   └── pump_controller.hpp
+│   └── Src/
+│       ├── controller.cpp
+│       ├── app.c
+│       ├── app_cmd.c
+│       └── app_state.c
+│
+├── Core/
+│   └── Src/
+│       └── main.c
+│
+├── tests/
+│   ├── test_pump_controller.cpp
+│   └── unit/
+│       ├── test_app.c
+│       ├── test_cmd.c
+│       └── test_uart_cmd.c
+│
+└── Makefile
 ```
 
 ---
 
 # Current Status
 
-```text
-CubeMX STM32 base project
-GPIO validated
-Button debounce
-LED toggle
-Host test framework
-UART parser architecture
-UART unit tests passing
+## Working:
+- STM32 build + flash
+- ST-LINK debug
+- `controller.cpp` LED/button logic
+- UART over USB (`screen /dev/tty.usbmodemXXXX 115200`)
+- Host-side unit testing via Makefile
+
+---
+
+# Makefile Unit Testing
+
+## Run examples:
+
+```bash
+make test_cpp
+make run
+make cmd
+make test_uart
+make clean
 ```
+
+---
+
+# Architecture Direction
+
+## Legacy:
+- `app.c`
+- `app_cmd.c`
+- `app_state.c`
+
+## Moving toward:
+- `controller.cpp`
+- modular C++ logic
+- hardware abstraction
+- TDD / SOLID
+
+---
+
+# Immediate Next Steps
+
+1. Expand `controller.cpp`
+2. Improve UART debug output
+3. Migrate logic from legacy C into C++
+4. Keep hardware-facing code isolated
+
+---
+
+# Goal
+
+Professional embedded C++ project with:
+
+- controller-led architecture
+- UART diagnostics
+- unit-testable logic
+- scalable maintainable design
+
