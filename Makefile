@@ -105,16 +105,17 @@ test_cpp_full:
 
 all_tests: run cmd matrix test_uart test_cpp
 
-
 # =========================
 # Clean
 # =========================
 
-clean:
-	rm -f \
+CLEAN_FILES = \
 	test_app \
 	test_cmd \
 	test_state_matrix \
 	thread_demo \
 	test_uart_cmd \
 	test_pump_controller
+
+clean:
+	rm -f $(CLEAN_FILES)
