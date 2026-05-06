@@ -1,47 +1,94 @@
 #include "controller.hpp"
 #include "main.h"
-#include <cstdio>   // printf
+#include "command_handler.hpp"
+#include "serial_command_interface.hpp"
 
-class Controller {
+extern UART_HandleTypeDef huart2;
+
+class Controller : public ICommandHandler {
 public:
-    void init() {
-        // LED off initially
-        HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-
-        // Startup debug
-        printf("Controller Init\r\n");
+    Controller()
+        : serial_(huart2, *this)
+    {
     }
 
-    void update() {
-        // Read button state
-        GPIO_PinState button = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
+    void init()
+    {
+        setLed(false);
 
-        if (button == GPIO_PIN_RESET) {
-            // Button pressed
-            HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+        serial_.init();
+        serial_.send("Controller Init\r\n");
+    }
 
-            // Debug print
-            printf("Button PRESSED -> LED ON\r\n");
+    void update()
+    {
+        // ---------------------------------------------
+        // UART command processing
+        // ---------------------------------------------
+        serial_.process();
 
-        } else {
-            // Button released
-            HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+        // ---------------------------------------------
+        // Blue button toggles LED state on each press
+        // ---------------------------------------------
+        static GPIO_PinState lastButtonState = GPIO_PIN_SET;
 
-            // Debug print
-            printf("Button RELEASED -> LED OFF\r\n");
+        GPIO_PinState currentButtonState =
+            HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
+
+        // Detect falling edge: released -> pressed
+        if (lastButtonState == GPIO_PIN_SET &&
+            currentButtonState == GPIO_PIN_RESET) {
+
+            ledState_ = !ledState_;
+            setLed(ledState_);
         }
 
-        // Slow output so console isn’t flooded
-        HAL_Delay(200);
+        lastButtonState = currentButtonState;
+
+        // Debounce
+        HAL_Delay(20);
     }
+
+    void setLed(bool on) override
+    {
+        ledState_ = on;
+
+        HAL_GPIO_WritePin(
+            LD2_GPIO_Port,
+            LD2_Pin,
+            on ? GPIO_PIN_SET : GPIO_PIN_RESET
+        );
+    }
+
+    void setPump(bool on) override
+    {
+        // Temporary placeholder:
+        // Pump command uses LED until real pump GPIO exists.
+        setLed(on);
+    }
+
+    void printStatus() override
+    {
+        if (ledState_) {
+            serial_.send("STATUS: LED ON\r\n");
+        } else {
+            serial_.send("STATUS: LED OFF\r\n");
+        }
+    }
+
+private:
+    SerialCommandInterface serial_;
+    bool ledState_ = false;
 };
 
 static Controller controller;
 
-extern "C" void Controller_Init(void) {
+extern "C" void Controller_Init(void)
+{
     controller.init();
 }
 
-extern "C" void Controller_Update(void) {
+extern "C" void Controller_Update(void)
+{
     controller.update();
 }

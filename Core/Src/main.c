@@ -22,8 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 //#include "app.h"
-#include "app_hw.h"
-#include "app_uart.h"
+//#include "app_hw.h"
 #include "controller.hpp"
 /* USER CODE END Includes */
 
@@ -93,7 +92,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  App_UartInit();
+  //App_UartInit();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,7 +103,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  //app_run_once();
-	App_UartTask();
+	//App_UartTask();
 	Controller_Update();
 	HAL_Delay(1);
 

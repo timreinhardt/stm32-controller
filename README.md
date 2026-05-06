@@ -2,14 +2,14 @@
 
 ## Overview
 
-STM32L476 embedded project refresher
-- onboard STM32 debugging status with LED, button, and UART validation
+STM32L476 embedded project refreshed around a cleaner C++ architecture for onboard debugging, UART command handling, and hardware validation.
 
 ### Current focus:
-- `controller.cpp` → Main C++ control layer - LED and button control - next rework 
-- UART / VCP → Runtime debug + command interface - working but expand
-- STM32CubeIDE → Build / flash / debug - working
-- Host-side Makefile → Unit testing - passing
+- `controller.cpp` → Main control layer
+- `serial_command_interface.cpp` → UART command parsing
+- `command_handler.hpp` → Hardware command abstraction
+- STM32CubeIDE → Build / flash / onboard debug
+- Makefile → Host-side C++ unit testing
 
 ---
 
@@ -19,38 +19,36 @@ STM32L476 embedded project refresher
 L476_UART_TEST/
 ├── App/
 │   ├── Inc/
+│   │   ├── command_handler.hpp
 │   │   ├── controller.hpp
-│   │   └── pump_controller.hpp
+│   │   ├── pump_controller.hpp
+│   │   └── serial_command_interface.hpp
+│   │
 │   └── Src/
-│       ├── controller.cpp (LED and button)
-│       ├── app.c (initial c test - cleanup and delete these)
-│       ├── app_cmd.c
-│       └── app_state.c
+│       ├── controller.cpp
+│       └── serial_command_interface.cpp
 │
 ├── Core/
 │   └── Src/
 │       └── main.c
 │
 ├── tests/
-│   ├── test_pump_controller.cpp
-│   └── unit/
-│       ├── test_app.c
-│       ├── test_cmd.c
-│       └── test_uart_cmd.c
+│   └── test_pump_controller.cpp
 │
-└── Makefile (unit tests)
-```
-
+└── Makefile
 ---
 
 # Current Status
 
 ## Working:
-- STM32 build + flash
-- ST-LINK debug
-- `controller.cpp` LED/button logic
-- UART over USB (`screen /dev/tty.usbmodemXXXX 115200`)
-- Host-side unit testing via Makefile
+- Flashing firmware to STM32 board
+- ST-LINK debugging + stepping through code
+- Breakpoints / live code execution validation
+- UART command parsing and responses
+- Blue hardware button input
+- Green onboard LED output
+- LED toggle state logic
+- Host-side C++ unit test builds
 
 ---
 
@@ -60,32 +58,17 @@ L476_UART_TEST/
 
 ```bash
 make test_cpp
-make run
+make all
 make cmd
-make test_uart
 make clean
 ```
 
 ---
 
-# Architecture Direction
 
-## Legacy:
-- `app.c`
-- `app_cmd.c`
-- `app_state.c`
+#  Next Steps
 
-## Moving toward:
-- `controller.cpp`
-- modular C++ logic
-- hardware abstraction
-- TDD / SOLID
-
----
-
-# Immediate Next Steps
-
-1. Expand `controller.cpp`
-2. ISR
+1. ISR
+2. rework
 
 ---
