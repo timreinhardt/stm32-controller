@@ -45,7 +45,6 @@ public:
 
         lastButtonState = currentButtonState;
 
-        // Debounce
         HAL_Delay(20);
     }
 

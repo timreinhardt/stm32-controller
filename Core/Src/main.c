@@ -19,10 +19,17 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#define USE_C_UART 1
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-//#include "app.h"
-//#include "app_hw.h"
+#if USE_C_UART
+#include "app_uart.h"
+#include "app.h"
+#include "app_hw.h"
+#else
+#include "controller.hpp"
+#endif
+
 #include "controller.hpp"
 /* USER CODE END Includes */
 
@@ -92,7 +99,11 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  //App_UartInit();
+#if USE_C_UART
+  App_UartInit();
+#else
+  Controller_Init();
+#endif
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,7 +115,12 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	  //app_run_once();
 	//App_UartTask();
+#if USE_C_UART
+	App_UartTask();
+    App_ButtonLedHw();
+#else
 	Controller_Update();
+#endif
 	HAL_Delay(1);
 
   }
